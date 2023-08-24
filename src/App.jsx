@@ -9,6 +9,10 @@ function App() {
   const [website, setWebsite] = useState("");
   const [location, setLocation] = useState("");
 
+  const [school, setSchool] = useState("");
+  const [years, setYears] = useState("");
+  const [degree, setDegree] = useState("");
+
   function handleNameInput(event) {
     setName(event.target.value);
   }
@@ -31,6 +35,18 @@ function App() {
 
   function handleLocationInput(event) {
     setLocation(event.target.value);
+  }
+
+  function handleSchoolInput(event) {
+    setSchool(event.target.value);
+  }
+
+  function handleYearsInput(event) {
+    setYears(event.target.value);
+  }
+
+  function handleDegreelInput(event) {
+    setDegree(event.target.value);
   }
 
   return (
@@ -178,6 +194,8 @@ function App() {
               <input
                 name="school"
                 id="school"
+                value={school}
+                onChange={handleSchoolInput}
                 type="text"
                 placeholder="School"
                 className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
@@ -193,6 +211,8 @@ function App() {
               <input
                 name="year"
                 id="year"
+                value={years}
+                onChange={handleYearsInput}
                 type="text"
                 placeholder="Years"
                 className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
@@ -210,6 +230,8 @@ function App() {
               <input
                 name="degree"
                 id="degree"
+                value={degree}
+                onChange={handleDegreelInput}
                 type="text"
                 placeholder="Degree"
                 className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
@@ -332,9 +354,12 @@ function App() {
         </div>
       </div>
 
-      <div className="w-1/2 bg-gray-200 p-4">
+      <div className="w-1/2 bg-white p-4">
         <div className="w-1/2 bg-white">
-          <p>Profile</p>
+        <div className="mt-6">
+          <h3 className="w-1/4 text-xl text-black border-b-4 border-black">Profile</h3>
+          <p className="mt-2 font-sm">Something here</p>
+          </div>
         </div>
       </div>
 
@@ -395,6 +420,14 @@ function App() {
             </svg>
             {website}
           </p>
+        </div>
+        <div className="px-14 py-4">
+          <h3 className="w-1/4 text-xl text-white border-b-4 border-white">Education</h3>
+          <h4 className="text-white font-medium mt-2">
+            {school}
+          </h4>
+          <p className="text-white italic">{degree}</p>
+          <p className="text-white">{years}</p>
         </div>
       </div>
     </div>
