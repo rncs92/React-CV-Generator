@@ -442,7 +442,7 @@ function App() {
             >
               Description
             </label>
-            <input
+            <textarea
               name="description"
               id="description"
               value={workDescription}
@@ -514,7 +514,20 @@ function App() {
             <h3 className="w-2/4 text-xl text-black border-b-4 border-black">
               Work Experience
             </h3>
-            <p className="mt-2 font-sm">Something here</p>
+            <div className="flex mt-2">
+              <p className="font-sm">{workYears}</p>
+            </div>
+            <div className="flex">
+              {jobTitle? (
+            <p className="font-sm font-medium">{jobTitle},</p>
+            ) : (
+              <p></p>
+            )}
+            <p className="ml-2 font-sm italic">{company}</p>
+            </div>
+            <div className="flex">
+              <p className="ml-4 mt-2 font-sm text-justify">{workDescription}</p>
+            </div>
           </div>
         </div>
       </div>
