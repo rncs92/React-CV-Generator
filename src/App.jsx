@@ -10,10 +10,17 @@ function App() {
   const [location, setLocation] = useState("");
 
   const [school, setSchool] = useState("");
-  const [years, setYears] = useState("");
+  const [schoolYears, setSchoolYears] = useState("");
   const [degree, setDegree] = useState("");
   const [gpa, setGpa] = useState("");
   const [educationInfo, setEducationInfo] = useState("");
+
+  const [company, setCompany] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
+  const [workYears, setWorkYears] = useState("");
+  const [workDescription, setWorkDescription] = useState("");
+  
+
 
   function handleNameInput(event) {
     setName(event.target.value);
@@ -43,8 +50,8 @@ function App() {
     setSchool(event.target.value);
   }
 
-  function handleYearsInput(event) {
-    setYears(event.target.value);
+  function handleSchoolYearsInput(event) {
+    setSchoolYears(event.target.value);
   }
 
   function handleDegreelInput(event) {
@@ -57,6 +64,22 @@ function App() {
 
   function handleEducationInfoInput(event) {
     setEducationInfo(event.target.value);
+  }
+
+  function handleCompanyInput(event) {
+    setCompany(event.target.value);
+  }
+
+  function handleJobTitleInput(event) {
+    setJobTitle(event.target.value);
+  }
+
+  function handleWorkYearsInput(event) {
+    setWorkYears(event.target.value);
+  }
+
+  function handleWorkDescription(event) {
+    setWorkDescription(event.target.value);
   }
 
   return (
@@ -221,8 +244,8 @@ function App() {
               <input
                 name="year"
                 id="year"
-                value={years}
-                onChange={handleYearsInput}
+                value={schoolYears}
+                onChange={handleSchoolYearsInput}
                 type="text"
                 placeholder="Years"
                 className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
@@ -313,6 +336,8 @@ function App() {
             <input
               name="company"
               id="company"
+              value={company}
+              onChange={handleCompanyInput}
               type="text"
               placeholder="Company"
               className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
@@ -329,6 +354,8 @@ function App() {
               <input
                 name="title"
                 id="title"
+                value={jobTitle}
+                onChange={handleJobTitleInput}
                 type="text"
                 placeholder="Job Title"
                 className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
@@ -344,6 +371,8 @@ function App() {
               <input
                 name="years"
                 id="years"
+                value={workYears}
+                onChange={handleWorkYearsInput}
                 type="text"
                 placeholder="Years"
                 className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
@@ -360,6 +389,8 @@ function App() {
             <input
               name="description"
               id="description"
+              value={workDescription}
+              onChange={handleWorkDescription}
               type="text"
               placeholder="Description"
               className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
@@ -373,6 +404,10 @@ function App() {
         <div className="w-1/2 bg-white">
         <div className="mt-6">
           <h3 className="w-1/4 text-xl text-black border-b-4 border-black">Profile</h3>
+          <p className="mt-2 font-sm">Something here</p>
+          </div>
+          <div className="mt-6">
+          <h3 className="w-3/5 text-xl text-black border-b-4 border-black">Work Experience</h3>
           <p className="mt-2 font-sm">Something here</p>
           </div>
         </div>
@@ -469,8 +504,8 @@ function App() {
           <h4 className="text-white font-medium">
             {school}
           </h4>
-          {years ? (
-          <p className="ml-4 text-white"><b>Years:</b> {years}</p>
+          {schoolYears ? (
+          <p className="ml-4 text-white"><b>Years:</b> {schoolYears}</p>
           ) : (
             <p className="text-white"></p>
           )}
