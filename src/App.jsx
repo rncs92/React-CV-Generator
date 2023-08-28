@@ -3,27 +3,38 @@ import "./App.css";
 import useLocalStorage from "./hooks/useLocalStorage";
 
 function App() {
-  const [name, setName] = useLocalStorage('name', '');
-  const [objective, setObjective] = useLocalStorage('objective', '')
-  const [email, setEmail] = useLocalStorage('email', '')
-  const [phone, setPhone] = useLocalStorage('phone', '')
-  const [website, setWebsite] = useLocalStorage('website', '')
-  const [location, setLocation] = useLocalStorage('location', '')
+  const [name, setName] = useLocalStorage("name", "");
+  const [objective, setObjective] = useLocalStorage("objective", "");
+  const [email, setEmail] = useLocalStorage("email", "");
+  const [phone, setPhone] = useLocalStorage("phone", "");
+  const [website, setWebsite] = useLocalStorage("website", "");
+  const [location, setLocation] = useLocalStorage("location", "");
 
-  const [school, setSchool] = useLocalStorage('school', '')
-  const [schoolYears, setSchoolYears] = useLocalStorage('schoolYears', '')
-  const [degree, setDegree] = useLocalStorage('degree', '')
-  const [gpa, setGpa] = useLocalStorage('gpa', '')
-  const [educationInfo, setEducationInfo] = useLocalStorage('educationInfo', '')
+  const [profile, setProfile] = useLocalStorage("profile", "");
 
-  const [company, setCompany] = useLocalStorage('company', '')
-  const [jobTitle, setJobTitle] = useLocalStorage('jobTitle', '')
-  const [workYears, setWorkYears] = useLocalStorage('workYears', '')
-  const [workDescription, setWorkDescription] = useLocalStorage('workDescription', '')
+  const [school, setSchool] = useLocalStorage("school", "");
+  const [schoolYears, setSchoolYears] = useLocalStorage("schoolYears", "");
+  const [degree, setDegree] = useLocalStorage("degree", "");
+  const [gpa, setGpa] = useLocalStorage("gpa", "");
+  const [educationInfo, setEducationInfo] = useLocalStorage(
+    "educationInfo",
+    ""
+  );
 
-  const [technicalSkills, setTechnicalSkills] = useLocalStorage('technicalSkills', '')
-  const [softSkills, setSoftSkills] = useLocalStorage('softSkills', '')
-  
+  const [company, setCompany] = useLocalStorage("company", "");
+  const [jobTitle, setJobTitle] = useLocalStorage("jobTitle", "");
+  const [workYears, setWorkYears] = useLocalStorage("workYears", "");
+  const [workDescription, setWorkDescription] = useLocalStorage(
+    "workDescription",
+    ""
+  );
+
+  const [technicalSkills, setTechnicalSkills] = useLocalStorage(
+    "technicalSkills",
+    ""
+  );
+  const [softSkills, setSoftSkills] = useLocalStorage("softSkills", "");
+
   function handleNameInput(event) {
     setName(event.target.value);
   }
@@ -46,6 +57,10 @@ function App() {
 
   function handleLocationInput(event) {
     setLocation(event.target.value);
+  }
+
+  function handleProfileInput(event) {
+    setProfile(event.target.value);
   }
 
   function handleSchoolInput(event) {
@@ -203,6 +218,37 @@ function App() {
                 placeholder="Location"
                 className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
               />
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4">
+          <h2 className="flex mr-2 text-xl font-bold font-sans mb-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 576 512"
+              className="mr-2 h-6 w-6 text-gray-600"
+            >
+              <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm80 256h64c44.2 0 80 35.8 80 80c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16c0-44.2 35.8-80 80-80zm96-96c0 35.3-28.7 64-64 64s-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64zm128-32H496c8.8 0 16 7.2 16 16s-7.2 16-16 16H368c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H496c8.8 0 16 7.2 16 16s-7.2 16-16 16H368c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H496c8.8 0 16 7.2 16 16s-7.2 16-16 16H368c-8.8 0-16-7.2-16-16s7.2-16 16-16z"></path>
+            </svg>
+            Profile
+          </h2>
+          <div className="flex space-x-4 mb-2">
+            <div className="flex flex-col w-full">
+              <label
+                htmlFor="school"
+                className="mb-2 text-lg font-sans font-medium"
+              >
+                Introduce yourself
+              </label>
+              <textarea
+                id="message"
+                value={profile}
+                onChange={handleProfileInput}
+                rows="4"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Introduce yourself"
+              ></textarea>
             </div>
           </div>
         </div>
@@ -410,12 +456,11 @@ function App() {
 
         <div className="p-4">
           <h2 className="flex mr-2 text-xl font-bold font-sans mb-4">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
               className="mr-2 h-6 w-6 text-gray-600"
-
-              >
+            >
               <path d="M0 224.2C0 100.6 100.2 0 224 0h32c95.2 0 174.2 69.3 189.4 160.1c2.2 13 6.7 25.7 15 36.1l42 52.6c6.2 7.8 9.6 17.4 9.6 27.4c0 24.2-19.6 43.8-43.8 43.8H448v64c0 35.3-28.7 64-64 64H320v32c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V407.3c0-16.7-6.9-32.5-17.1-45.8C16.6 322.4 0 274.1 0 224.2zM285.3 208H336c26.5 0 48-21.5 48-48s-21.5-48-48-48c-.9 0-1.8 0-2.7 .1C326.7 93.4 308.9 80 288 80c-8.6 0-16.6 2.2-23.5 6.2C255.9 72.8 241 64 224 64s-31.9 8.8-40.5 22.2c-7-3.9-15-6.2-23.5-6.2c-26.5 0-48 21.5-48 48c-26.5 0-48 21.5-48 48c0 20.9 13.4 38.7 32.1 45.3c0 .9-.1 1.8-.1 2.7c0 26.5 21.5 48 48 48c5.6 0 11-1 16-2.7V288c0 17.7 14.3 32 32 32s32-14.3 32-32V269.3c5 1.8 10.4 2.7 16 2.7c26.5 0 48-21.5 48-48c0-5.6-1-11-2.7-16zM160 176v2.7l-.1 0c0-.9 .1-1.8 .1-2.7z"></path>
             </svg>
             Skills
@@ -458,15 +503,15 @@ function App() {
       </div>
 
       <div className="w-1/2 bg-white p-4">
-        <div className="w-1/2 bg-white">
+        <div className="w-4/5 bg-white">
           <div className="mt-6">
             <h3 className="w-1/4 text-xl text-black border-b-4 border-black">
               Profile
             </h3>
-            <p className="mt-2 font-sm">Something here</p>
+            <p className="mt-2 font-sm text-justify">{profile}</p>
           </div>
           <div className="mt-6">
-            <h3 className="w-3/5 text-xl text-black border-b-4 border-black">
+            <h3 className="w-2/4 text-xl text-black border-b-4 border-black">
               Work Experience
             </h3>
             <p className="mt-2 font-sm">Something here</p>
@@ -594,17 +639,21 @@ function App() {
           </h3>
           {technicalSkills ? (
             <div>
-          <h4 className="mt-2 text-white text-lg font-medium">Techincal Skills</h4>
-            <p className="text-white ">{technicalSkills}</p>
+              <h4 className="mt-2 text-white text-lg font-medium">
+                Techincal Skills
+              </h4>
+              <p className="text-white ">{technicalSkills}</p>
             </div>
-          ): (
+          ) : (
             <p></p>
           )}
-          {softSkills ? ( 
+          {softSkills ? (
             <div>
-          <h4 className="mt-2 text-white text-lg font-medium">Soft Skills</h4>
-          <p className="text-white">{softSkills}</p>
-          </div>
+              <h4 className="mt-2 text-white text-lg font-medium">
+                Soft Skills
+              </h4>
+              <p className="text-white">{softSkills}</p>
+            </div>
           ) : (
             <p></p>
           )}
