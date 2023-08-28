@@ -94,7 +94,7 @@ function App() {
 
   return (
     <div className="flex h-full">
-      <div className="w-1/2 bg-gray-100 p-4">
+      <div className="w-1/2 overflow-y-auto h-screen bg-gray-100 p-4">
         <h2 className="text-2xl font-bold font-sans mb-4">
           Please fill the form
         </h2>
