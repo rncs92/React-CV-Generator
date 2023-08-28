@@ -1,27 +1,29 @@
 import { useState } from "react";
 import "./App.css";
+import useLocalStorage from "./hooks/useLocalStorage";
 
 function App() {
-  const [name, setName] = useState("");
-  const [objective, setObjective] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [website, setWebsite] = useState("");
-  const [location, setLocation] = useState("");
+  const [name, setName] = useLocalStorage('name', '');
+  const [objective, setObjective] = useLocalStorage('objective', '')
+  const [email, setEmail] = useLocalStorage('email', '')
+  const [phone, setPhone] = useLocalStorage('phone', '')
+  const [website, setWebsite] = useLocalStorage('website', '')
+  const [location, setLocation] = useLocalStorage('location', '')
 
-  const [school, setSchool] = useState("");
-  const [schoolYears, setSchoolYears] = useState("");
-  const [degree, setDegree] = useState("");
-  const [gpa, setGpa] = useState("");
-  const [educationInfo, setEducationInfo] = useState("");
+  const [school, setSchool] = useLocalStorage('school', '')
+  const [schoolYears, setSchoolYears] = useLocalStorage('schoolYears', '')
+  const [degree, setDegree] = useLocalStorage('degree', '')
+  const [gpa, setGpa] = useLocalStorage('gpa', '')
+  const [educationInfo, setEducationInfo] = useLocalStorage('educationInfo', '')
 
-  const [company, setCompany] = useState("");
-  const [jobTitle, setJobTitle] = useState("");
-  const [workYears, setWorkYears] = useState("");
-  const [workDescription, setWorkDescription] = useState("");
+  const [company, setCompany] = useLocalStorage('company', '')
+  const [jobTitle, setJobTitle] = useLocalStorage('jobTitle', '')
+  const [workYears, setWorkYears] = useLocalStorage('workYears', '')
+  const [workDescription, setWorkDescription] = useLocalStorage('workDescription', '')
+
+  const [technicalSkills, setTechnicalSkills] = useLocalStorage('technicalSkills', '')
+  const [softSkills, setSoftSkills] = useLocalStorage('softSkills', '')
   
-
-
   function handleNameInput(event) {
     setName(event.target.value);
   }
@@ -78,8 +80,16 @@ function App() {
     setWorkYears(event.target.value);
   }
 
-  function handleWorkDescription(event) {
+  function handleWorkDescriptionInput(event) {
     setWorkDescription(event.target.value);
+  }
+
+  function handleTechnicalSkillsInput(event) {
+    setTechnicalSkills(event.target.value);
+  }
+
+  function handleSoftSkillsInput(event) {
+    setSoftSkills(event.target.value);
   }
 
   return (
@@ -390,25 +400,76 @@ function App() {
               name="description"
               id="description"
               value={workDescription}
-              onChange={handleWorkDescription}
+              onChange={handleWorkDescriptionInput}
               type="text"
               placeholder="Description"
               className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
             />
           </div>
         </div>
+
+        <div className="p-4">
+          <h2 className="flex mr-2 text-xl font-bold font-sans mb-4">
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 0 512 512"
+              className="mr-2 h-6 w-6 text-gray-600"
+
+              >
+              <path d="M0 224.2C0 100.6 100.2 0 224 0h32c95.2 0 174.2 69.3 189.4 160.1c2.2 13 6.7 25.7 15 36.1l42 52.6c6.2 7.8 9.6 17.4 9.6 27.4c0 24.2-19.6 43.8-43.8 43.8H448v64c0 35.3-28.7 64-64 64H320v32c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V407.3c0-16.7-6.9-32.5-17.1-45.8C16.6 322.4 0 274.1 0 224.2zM285.3 208H336c26.5 0 48-21.5 48-48s-21.5-48-48-48c-.9 0-1.8 0-2.7 .1C326.7 93.4 308.9 80 288 80c-8.6 0-16.6 2.2-23.5 6.2C255.9 72.8 241 64 224 64s-31.9 8.8-40.5 22.2c-7-3.9-15-6.2-23.5-6.2c-26.5 0-48 21.5-48 48c-26.5 0-48 21.5-48 48c0 20.9 13.4 38.7 32.1 45.3c0 .9-.1 1.8-.1 2.7c0 26.5 21.5 48 48 48c5.6 0 11-1 16-2.7V288c0 17.7 14.3 32 32 32s32-14.3 32-32V269.3c5 1.8 10.4 2.7 16 2.7c26.5 0 48-21.5 48-48c0-5.6-1-11-2.7-16zM160 176v2.7l-.1 0c0-.9 .1-1.8 .1-2.7z"></path>
+            </svg>
+            Skills
+          </h2>
+          <div className="flex flex-col w-full mb-2">
+            <label
+              htmlFor="company"
+              className="mb-2 text-lg font-sans font-medium"
+            >
+              Technical Skills
+            </label>
+            <input
+              name="company"
+              id="company"
+              value={technicalSkills}
+              onChange={handleTechnicalSkillsInput}
+              type="text"
+              placeholder="Technical skills"
+              className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+            />
+          </div>
+          <div className="flex flex-col w-full">
+            <label
+              htmlFor="description"
+              className="mb-2 text-lg font-sans font-medium"
+            >
+              Soft Skills
+            </label>
+            <input
+              name="description"
+              id="description"
+              value={softSkills}
+              onChange={handleSoftSkillsInput}
+              type="text"
+              placeholder="Soft skills"
+              className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+            />
+          </div>
+        </div>
       </div>
 
-    
       <div className="w-1/2 bg-white p-4">
         <div className="w-1/2 bg-white">
-        <div className="mt-6">
-          <h3 className="w-1/4 text-xl text-black border-b-4 border-black">Profile</h3>
-          <p className="mt-2 font-sm">Something here</p>
+          <div className="mt-6">
+            <h3 className="w-1/4 text-xl text-black border-b-4 border-black">
+              Profile
+            </h3>
+            <p className="mt-2 font-sm">Something here</p>
           </div>
           <div className="mt-6">
-          <h3 className="w-3/5 text-xl text-black border-b-4 border-black">Work Experience</h3>
-          <p className="mt-2 font-sm">Something here</p>
+            <h3 className="w-3/5 text-xl text-black border-b-4 border-black">
+              Work Experience
+            </h3>
+            <p className="mt-2 font-sm">Something here</p>
           </div>
         </div>
       </div>
@@ -420,121 +481,133 @@ function App() {
         <p className="flex justify-center text-white italic">{objective}</p>
         <div className="flex justify-center px-14 py-4">
           {email ? (
-          <p className="flex text-sm text-white font-normal">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              className="mr-2 h-5 w-5"
-            >
-              <path
-                className="fill-white"
-                d="M64 112c-8.8 0-16 7.2-16 16v22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1V128c0-8.8-7.2-16-16-16H64zM48 212.2V384c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V212.2L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64H448c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z"
-              ></path>
-            </svg>
-            {email}
-          </p>
-          ) : (
             <p className="flex text-sm text-white font-normal">
-          </p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                className="mr-2 h-5 w-5"
+              >
+                <path
+                  className="fill-white"
+                  d="M64 112c-8.8 0-16 7.2-16 16v22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1V128c0-8.8-7.2-16-16-16H64zM48 212.2V384c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V212.2L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64H448c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z"
+                ></path>
+              </svg>
+              {email}
+            </p>
+          ) : (
+            <p className="flex text-sm text-white font-normal"></p>
           )}
 
           {phone ? (
-          <p className="flex text-sm text-white font-normal">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              className="mr-2 ml-2 h-5 w-5 text-white"
-            >
-              <path
-                className="fill-white"
-                d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"
-              ></path>
-            </svg>
-            {phone}
-          </p>
-          ) : (
             <p className="flex text-sm text-white font-normal">
-          </p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                className="mr-2 ml-2 h-5 w-5 text-white"
+              >
+                <path
+                  className="fill-white"
+                  d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"
+                ></path>
+              </svg>
+              {phone}
+            </p>
+          ) : (
+            <p className="flex text-sm text-white font-normal"></p>
           )}
-          </div>
+        </div>
 
-      <div className="flex justify-center px-14 py-4">
+        <div className="flex justify-center px-14 py-2">
           {location ? (
-          <p className="flex text-sm text-white font-normal">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              className="mr-2 ml-2 h-5 w-5 text-white"
-            >
-              <path
-                className="fill-white"
-                d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"
-              ></path>
-            </svg>
-            {location}
-          </p>
-          ) : (
             <p className="flex text-sm text-white font-normal">
-          </p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                className="mr-2 ml-2 h-5 w-5 text-white"
+              >
+                <path
+                  className="fill-white"
+                  d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"
+                ></path>
+              </svg>
+              {location}
+            </p>
+          ) : (
+            <p className="flex text-sm text-white font-normal"></p>
           )}
 
           {website ? (
-          <p className="flex text-sm text-white font-normal">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              className="mr-2 ml-2 h-5 w-5 text-white"
-            >
-              <path
-                className="fill-white"
-                d="M256 64C256 46.33 270.3 32 288 32H415.1C415.1 32 415.1 32 415.1 32C420.3 32 424.5 32.86 428.2 34.43C431.1 35.98 435.5 38.27 438.6 41.3C438.6 41.35 438.6 41.4 438.7 41.44C444.9 47.66 447.1 55.78 448 63.9C448 63.94 448 63.97 448 64V192C448 209.7 433.7 224 416 224C398.3 224 384 209.7 384 192V141.3L214.6 310.6C202.1 323.1 181.9 323.1 169.4 310.6C156.9 298.1 156.9 277.9 169.4 265.4L338.7 96H288C270.3 96 256 81.67 256 64V64zM0 128C0 92.65 28.65 64 64 64H160C177.7 64 192 78.33 192 96C192 113.7 177.7 128 160 128H64V416H352V320C352 302.3 366.3 288 384 288C401.7 288 416 302.3 416 320V416C416 451.3 387.3 480 352 480H64C28.65 480 0 451.3 0 416V128z"
-              ></path>
-            </svg>
-            {website}
-          </p>
-          ) : (
             <p className="flex text-sm text-white font-normal">
-          </p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                className="mr-2 ml-2 h-5 w-5 text-white"
+              >
+                <path
+                  className="fill-white"
+                  d="M256 64C256 46.33 270.3 32 288 32H415.1C415.1 32 415.1 32 415.1 32C420.3 32 424.5 32.86 428.2 34.43C431.1 35.98 435.5 38.27 438.6 41.3C438.6 41.35 438.6 41.4 438.7 41.44C444.9 47.66 447.1 55.78 448 63.9C448 63.94 448 63.97 448 64V192C448 209.7 433.7 224 416 224C398.3 224 384 209.7 384 192V141.3L214.6 310.6C202.1 323.1 181.9 323.1 169.4 310.6C156.9 298.1 156.9 277.9 169.4 265.4L338.7 96H288C270.3 96 256 81.67 256 64V64zM0 128C0 92.65 28.65 64 64 64H160C177.7 64 192 78.33 192 96C192 113.7 177.7 128 160 128H64V416H352V320C352 302.3 366.3 288 384 288C401.7 288 416 302.3 416 320V416C416 451.3 387.3 480 352 480H64C28.65 480 0 451.3 0 416V128z"
+                ></path>
+              </svg>
+              {website}
+            </p>
+          ) : (
+            <p className="flex text-sm text-white font-normal"></p>
           )}
         </div>
 
         <div className="px-14 py-4">
-          <h3 className="w-1/4 text-xl text-white border-b-4 border-white">Education</h3>
+          <h3 className="w-1/4 text-xl text-white border-b-4 border-white">
+            Education
+          </h3>
           <div className="mt-2 flex">
-          <h4 className="text-white font-medium">
-            {school}
-          </h4>
-          {schoolYears ? (
-          <p className="ml-4 text-white"><b>Years:</b> {schoolYears}</p>
-          ) : (
-            <p className="text-white"></p>
-          )}
+            <h4 className="text-white font-medium">{school}</h4>
+            {schoolYears ? (
+              <p className="ml-4 text-white">
+                <b>Years:</b> {schoolYears}
+              </p>
+            ) : (
+              <p className="text-white"></p>
+            )}
           </div>
           <div className="mt-1 flex">
-          <p className="text-white italic">{degree}</p>
-          {gpa ? (
-          <p className="ml-4 text-white"><b>GPA:</b> {gpa}</p>
-          ) : (
-            <p className="text-white"></p>
-          )}
+            <p className="text-white italic">{degree}</p>
+            {gpa ? (
+              <p className="ml-4 text-white">
+                <b>GPA:</b> {gpa}
+              </p>
+            ) : (
+              <p className="text-white"></p>
+            )}
           </div>
           {educationInfo ? (
-          <p className="mt-1 text-white italic"><b>Additional Info:</b> {educationInfo}</p>
+            <p className="mt-1 text-white italic">
+              <b>Additional Info:</b> {educationInfo}
+            </p>
           ) : (
             <p className="text-white"></p>
           )}
         </div>
 
         <div className="px-14 py-4">
-          <h3 className="w-1/4 text-xl text-white border-b-4 border-white">Skills</h3>
-          <h4 className="mt-2 text-white font-medium">
-            Techincal Skills
-          </h4>
-
-          <h4 className="mt-2 text-white font-medium">
-            Soft Skills
-          </h4>
-         
+          <h3 className="w-1/4 text-xl text-white border-b-4 border-white">
+            Skills
+          </h3>
+          {technicalSkills ? (
+            <div>
+          <h4 className="mt-2 text-white text-lg font-medium">Techincal Skills</h4>
+            <p className="text-white ">{technicalSkills}</p>
+            </div>
+          ): (
+            <p></p>
+          )}
+          {softSkills ? ( 
+            <div>
+          <h4 className="mt-2 text-white text-lg font-medium">Soft Skills</h4>
+          <p className="text-white">{softSkills}</p>
+          </div>
+          ) : (
+            <p></p>
+          )}
         </div>
       </div>
     </div>
