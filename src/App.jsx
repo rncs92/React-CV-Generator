@@ -12,6 +12,8 @@ function App() {
   const [school, setSchool] = useState("");
   const [years, setYears] = useState("");
   const [degree, setDegree] = useState("");
+  const [gpa, setGpa] = useState("");
+  const [educationInfo, setEducationInfo] = useState("");
 
   function handleNameInput(event) {
     setName(event.target.value);
@@ -47,6 +49,14 @@ function App() {
 
   function handleDegreelInput(event) {
     setDegree(event.target.value);
+  }
+
+  function handleGpaInput(event) {
+    setGpa(event.target.value);
+  }
+
+  function handleEducationInfoInput(event) {
+    setEducationInfo(event.target.value);
   }
 
   return (
@@ -247,6 +257,8 @@ function App() {
               <input
                 name="gpa"
                 id="gpa"
+                value={gpa}
+                onChange={handleGpaInput}
                 type="text"
                 placeholder="GPA"
                 className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
@@ -263,6 +275,8 @@ function App() {
             <input
               name="info"
               id="info"
+              value={educationInfo}
+              onChange={handleEducationInfoInput}
               type="text"
               placeholder="Info"
               className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
@@ -354,6 +368,7 @@ function App() {
         </div>
       </div>
 
+    
       <div className="w-1/2 bg-white p-4">
         <div className="w-1/2 bg-white">
         <div className="mt-6">
@@ -367,7 +382,9 @@ function App() {
         <h2 className="mt-6 flex justify-center text-2xl text-white font-bold font-sans mb-4">
           {name}
         </h2>
-        <div className="flex justify-between px-14 py-4">
+        <p className="flex justify-center text-white italic">{objective}</p>
+        <div className="flex justify-center px-14 py-4">
+          {email ? (
           <p className="flex text-sm text-white font-normal">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -381,11 +398,17 @@ function App() {
             </svg>
             {email}
           </p>
+          ) : (
+            <p className="flex text-sm text-white font-normal">
+          </p>
+          )}
+
+          {phone ? (
           <p className="flex text-sm text-white font-normal">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
-              className="mr-2 h-5 w-5 text-white"
+              className="mr-2 ml-2 h-5 w-5 text-white"
             >
               <path
                 className="fill-white"
@@ -394,11 +417,19 @@ function App() {
             </svg>
             {phone}
           </p>
+          ) : (
+            <p className="flex text-sm text-white font-normal">
+          </p>
+          )}
+          </div>
+
+      <div className="flex justify-center px-14 py-4">
+          {location ? (
           <p className="flex text-sm text-white font-normal">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
-              className="mr-2 h-5 w-5 text-white"
+              className="mr-2 ml-2 h-5 w-5 text-white"
             >
               <path
                 className="fill-white"
@@ -407,11 +438,17 @@ function App() {
             </svg>
             {location}
           </p>
+          ) : (
+            <p className="flex text-sm text-white font-normal">
+          </p>
+          )}
+
+          {website ? (
           <p className="flex text-sm text-white font-normal">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
-              className="mr-2 h-5 w-5 text-white"
+              className="mr-2 ml-2 h-5 w-5 text-white"
             >
               <path
                 className="fill-white"
@@ -420,14 +457,49 @@ function App() {
             </svg>
             {website}
           </p>
+          ) : (
+            <p className="flex text-sm text-white font-normal">
+          </p>
+          )}
         </div>
+
         <div className="px-14 py-4">
           <h3 className="w-1/4 text-xl text-white border-b-4 border-white">Education</h3>
-          <h4 className="text-white font-medium mt-2">
+          <div className="mt-2 flex">
+          <h4 className="text-white font-medium">
             {school}
           </h4>
+          {years ? (
+          <p className="ml-4 text-white"><b>Years:</b> {years}</p>
+          ) : (
+            <p className="text-white"></p>
+          )}
+          </div>
+          <div className="mt-1 flex">
           <p className="text-white italic">{degree}</p>
-          <p className="text-white">{years}</p>
+          {gpa ? (
+          <p className="ml-4 text-white"><b>GPA:</b> {gpa}</p>
+          ) : (
+            <p className="text-white"></p>
+          )}
+          </div>
+          {educationInfo ? (
+          <p className="mt-1 text-white italic"><b>Additional Info:</b> {educationInfo}</p>
+          ) : (
+            <p className="text-white"></p>
+          )}
+        </div>
+
+        <div className="px-14 py-4">
+          <h3 className="w-1/4 text-xl text-white border-b-4 border-white">Skills</h3>
+          <h4 className="mt-2 text-white font-medium">
+            Techincal Skills
+          </h4>
+
+          <h4 className="mt-2 text-white font-medium">
+            Soft Skills
+          </h4>
+         
         </div>
       </div>
     </div>
