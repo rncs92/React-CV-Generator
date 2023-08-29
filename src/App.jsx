@@ -37,6 +37,8 @@ function App() {
 
   const [languages, setLanguages] = useLocalStorage("languages", "");
 
+  const [imageUrl, setImageUrl] = useLocalStorage("image", "");
+
   function handleNameInput(event) {
     setName(event.target.value);
   }
@@ -113,6 +115,16 @@ function App() {
     setLanguages(event.target.value);
   }
 
+  function handleImageUpload(event) {
+    const selectedImage = event.target.files[0];
+
+    if (selectedImage) {
+      const imageUrl = URL.createObjectURL(selectedImage);
+
+      setImageUrl(imageUrl);
+    }
+  }
+
   return (
     <div className="flex h-full">
       <div className="w-1/2 overflow-y-auto h-screen bg-gray-200 p-4">
@@ -135,6 +147,34 @@ function App() {
               type="text"
               placeholder="Enter your name"
               className="mt-1 pg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+            />
+          </div>
+          <div className="flex flex-col w-full mb-2">
+            <label
+              htmlFor="profilePhoto"
+              className="w-2/6 py-1 bg-blue-600 cursor-pointer rounded-md text-white outline-none focus:ring-4 shadow-lg transform active:scale-x-75 transition-transform flex items-center justify-center"
+            >
+              <svg
+                className="h-4 w-4 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                />
+              </svg>
+              Upload Photo
+            </label>
+            <input
+              className="hidden"
+              type="file"
+              id="profilePhoto"
+              accept="image/*"
+              onChange={handleImageUpload}
             />
           </div>
           <div className="flex flex-col w-full mb-2">
@@ -574,6 +614,9 @@ function App() {
         <h2 className="mt-6 flex justify-center text-2xl text-white font-bold font-sans mb-4">
           {name}
         </h2>
+        <div className="flex justify-center">
+          <img src={imageUrl} alt="" className="w-48 h-48 rounded-full mb-2" />
+        </div>
         <p className="flex justify-center text-white italic">{objective}</p>
         <div className="flex justify-center px-14 py-4">
           {email ? (
