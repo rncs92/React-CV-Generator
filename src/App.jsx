@@ -4,6 +4,9 @@ import useLocalStorage from "./hooks/useLocalStorage";
 import SkillsDisplay from "./components/SkillsDisplay";
 import LanguagesDisplay from "./components/LanguagesDisplay";
 import ProfileDisplay from "./components/ProfileDisplay";
+import EducationsDisplay from "./components/EducationsDisplay";
+import InfoDisplay from "./components/InfoDisplay";
+import WorkExperiencesDisplay from "./components/WorkExperiencesDisplay";
 
 function App() {
   const [name, setName] = useLocalStorage("name", "");
@@ -15,8 +18,7 @@ function App() {
 
   const [profile, setProfile] = useLocalStorage("profile", "");
 
-  const [educationId, setEducationId] = useState(2);
-
+  const [educationId, setEducationId] = useLocalStorage("educationId", 2);
   const [educations, setEducations] = useState([
     {
       id: 1,
@@ -28,13 +30,16 @@ function App() {
     },
   ]);
 
-  const [company, setCompany] = useLocalStorage("company", "");
-  const [jobTitle, setJobTitle] = useLocalStorage("jobTitle", "");
-  const [workYears, setWorkYears] = useLocalStorage("workYears", "");
-  const [workDescription, setWorkDescription] = useLocalStorage(
-    "workDescription",
-    ""
-  );
+  const [workExperienceId, setWorkExperienceId] = useState(2);
+  const [workExperiences, setWorkExperiences] = useState([
+    {
+      id: 1,
+      company: "",
+      jobTitle: "",
+      workYears: "",
+      workDescription: "",
+    },
+  ]);
 
   const [technicalSkills, setTechnicalSkills] = useLocalStorage(
     "technicalSkills",
@@ -51,11 +56,11 @@ function App() {
       ...educations,
       {
         id: educationId,
-        school: '',
-        schoolYears: '',
-        degree: '',
-        gpa: '',
-        educationInfo: '',
+        school: "",
+        schoolYears: "",
+        degree: "",
+        gpa: "",
+        educationInfo: "",
       },
     ]);
 
@@ -64,6 +69,27 @@ function App() {
 
   function deleteEducation(id) {
     setEducations([...educations.filter((education) => education.id !== id)]);
+  }
+
+  function addWorkExperience() {
+    setWorkExperiences([
+      ...workExperiences,
+      {
+        id: workExperienceId,
+        company: "",
+        jobTitle: "",
+        workYears: "",
+        workDescription: "",
+      },
+    ]);
+
+    setWorkExperienceId((prevWorkExperienceId) => prevWorkExperienceId + 1);
+  }
+
+  function deleteWorkExperience(id) {
+    setWorkExperiences([
+      ...workExperiences.filter((workExperience) => workExperience.id !== id),
+    ]);
   }
 
   function handleNameInput(event) {
@@ -144,20 +170,44 @@ function App() {
     setEducations(updatedEducations);
   }
 
-  function handleCompanyInput(event) {
-    setCompany(event.target.value);
+  function handleCompanyInput(event, workExperienceId) {
+    const updatedWorkExperiences = workExperiences.map((workExperience) =>
+      workExperience.id === workExperienceId
+        ? { ...workExperience, company: event.target.value }
+        : workExperience
+    );
+
+    setWorkExperiences(updatedWorkExperiences);
   }
 
-  function handleJobTitleInput(event) {
-    setJobTitle(event.target.value);
+  function handleJobTitleInput(event, workExperienceId) {
+    const updatedWorkExperiences = workExperiences.map((workExperience) =>
+      workExperience.id === workExperienceId
+        ? { ...workExperience, jobTitle: event.target.value }
+        : workExperience
+    );
+
+    setWorkExperiences(updatedWorkExperiences);
   }
 
-  function handleWorkYearsInput(event) {
-    setWorkYears(event.target.value);
+  function handleWorkYearsInput(event, workExperienceId) {
+    const updatedWorkExperiences = workExperiences.map((workExperience) =>
+      workExperience.id === workExperienceId
+        ? { ...workExperience, workYears: event.target.value }
+        : workExperience
+    );
+
+    setWorkExperiences(updatedWorkExperiences);
   }
 
-  function handleWorkDescriptionInput(event) {
-    setWorkDescription(event.target.value);
+  function handleWorkDescriptionInput(event, workExperienceId) {
+    const updatedWorkExperiences = workExperiences.map((workExperience) =>
+      workExperience.id === workExperienceId
+        ? { ...workExperience, workDescription: event.target.value }
+        : workExperience
+    );
+
+    setWorkExperiences(updatedWorkExperiences);
   }
 
   function handleTechnicalSkillsInput(event) {
@@ -540,75 +590,134 @@ function App() {
             </svg>
             Work Experience
           </h2>
-          <div className="flex flex-col w-full mb-2">
-            <label
-              htmlFor="company"
-              className="mb-2 text-lg font-sans font-medium"
+          {workExperiences.map((workExperience) => (
+            <ul
+              className="p-2 mb-2 bg-gray-100 border-gray-300 border-2 rounded-lg shadow-xl"
+              key={workExperience.id}
             >
-              Company
-            </label>
-            <input
-              name="company"
-              id="company"
-              value={company}
-              onChange={handleCompanyInput}
-              type="text"
-              placeholder="Company"
-              className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
-            />
-          </div>
-          <div className="flex space-x-4">
-            <div className="flex flex-col w-full mb-2">
-              <label
-                htmlFor="title"
-                className="mb-2 text-lg font-sans font-medium"
-              >
-                Job Title
-              </label>
-              <input
-                name="title"
-                id="title"
-                value={jobTitle}
-                onChange={handleJobTitleInput}
-                type="text"
-                placeholder="Job Title"
-                className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
-              />
-            </div>
-            <div className="flex flex-col w-full mb-2">
-              <label
-                htmlFor="years"
-                className="mb-2 text-lg font-sans font-medium"
-              >
-                Years
-              </label>
-              <input
-                name="years"
-                id="years"
-                value={workYears}
-                onChange={handleWorkYearsInput}
-                type="text"
-                placeholder="Years"
-                className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
-              />
-            </div>
-          </div>
-          <div className="flex flex-col w-full">
-            <label
-              htmlFor="description"
-              className="mb-2 text-lg font-sans font-medium"
+              <div className="flex justify-end">
+                <button onClick={() => deleteWorkExperience(workExperience.id)}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                    className="h-6 w-6 text-red-800"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+              <div className="flex flex-col w-full mb-2">
+                <label
+                  htmlFor="company"
+                  className="mb-2 text-lg font-sans font-medium"
+                >
+                  Company
+                </label>
+                <input
+                  name="company"
+                  id="company"
+                  defaultValue={workExperience.company}
+                  onChange={(event) =>
+                    handleCompanyInput(event, workExperience.id)
+                  }
+                  type="text"
+                  placeholder="Company"
+                  className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                />
+              </div>
+              <div className="flex space-x-4">
+                <div className="flex flex-col w-full mb-2">
+                  <label
+                    htmlFor="title"
+                    className="mb-2 text-lg font-sans font-medium"
+                  >
+                    Job Title
+                  </label>
+                  <input
+                    name="title"
+                    id="title"
+                    defaultValue={workExperience.jobTitle}
+                    onChange={(event) =>
+                      handleJobTitleInput(event, workExperience.id)
+                    }
+                    type="text"
+                    placeholder="Job Title"
+                    className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                  />
+                </div>
+                <div className="flex flex-col w-full mb-2">
+                  <label
+                    htmlFor="years"
+                    className="mb-2 text-lg font-sans font-medium"
+                  >
+                    Years
+                  </label>
+                  <input
+                    name="years"
+                    id="years"
+                    defaultValue={workExperience.workYears}
+                    onChange={(event) =>
+                      handleWorkYearsInput(event, workExperience.id)
+                    }
+                    type="text"
+                    placeholder="Years"
+                    className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col w-full">
+                <label
+                  htmlFor="description"
+                  className="mb-2 text-lg font-sans font-medium"
+                >
+                  Description
+                </label>
+                <textarea
+                  name="description"
+                  id="description"
+                  defaultValue={workExperience.workDescription}
+                  onChange={(event) =>
+                    handleWorkDescriptionInput(event, workExperience.id)
+                  }
+                  type="text"
+                  placeholder="Description"
+                  className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                />
+              </div>
+            </ul>
+          ))}
+
+          <div className="flex justify-end mt-2">
+            <button
+              type="button"
+              className="flex items-center rounded-md bg-white py-2 pl-3 pr-4 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              onClick={addWorkExperience}
             >
-              Description
-            </label>
-            <textarea
-              name="description"
-              id="description"
-              value={workDescription}
-              onChange={handleWorkDescriptionInput}
-              type="text"
-              placeholder="Description"
-              className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
-            />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                aria-hidden="true"
+                className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 6v12m6-6H6"
+                ></path>
+              </svg>
+              Add Experience
+            </button>
           </div>
         </div>
 
@@ -693,150 +802,21 @@ function App() {
       <div className="w-1/2 bg-white p-4">
         <div className="w-4/5 bg-white">
           <ProfileDisplay profile={profile} />
-          <div className="mt-6">
-            <h3 className="w-2/4 text-xl text-black border-b-4 border-black">
-              Work Experience
-            </h3>
-            <div className="flex mt-2">
-              <p className="font-sm">{workYears}</p>
-            </div>
-            <div className="flex">
-              {jobTitle ? (
-                <p className="font-sm font-medium">{jobTitle},</p>
-              ) : (
-                <p></p>
-              )}
-              <p className="ml-2 font-sm italic">{company}</p>
-            </div>
-            <div className="flex">
-              <p className="ml-4 mt-2 font-sm text-justify">
-                {workDescription}
-              </p>
-            </div>
-          </div>
+          <WorkExperiencesDisplay workExperiences={workExperiences} />
         </div>
       </div>
 
       <div className="w-1/2 bg-sky-800">
-        <h2 className="mt-6 flex justify-center text-2xl text-white font-bold font-sans mb-4">
-          {name}
-        </h2>
-        <div className="flex justify-center">
-          <img src={imageUrl} alt="" className="w-48 h-48 rounded-full mb-2" />
-        </div>
-        <p className="flex justify-center text-white italic">{objective}</p>
-        <div className="flex justify-center px-14 py-4">
-          {email ? (
-            <p className="flex text-sm text-white font-normal">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-                className="mr-2 h-5 w-5"
-              >
-                <path
-                  className="fill-white"
-                  d="M64 112c-8.8 0-16 7.2-16 16v22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1V128c0-8.8-7.2-16-16-16H64zM48 212.2V384c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V212.2L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64H448c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z"
-                ></path>
-              </svg>
-              {email}
-            </p>
-          ) : (
-            <p className="flex text-sm text-white font-normal"></p>
-          )}
-
-          {phone ? (
-            <p className="flex text-sm text-white font-normal">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-                className="mr-2 ml-2 h-5 w-5 text-white"
-              >
-                <path
-                  className="fill-white"
-                  d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"
-                ></path>
-              </svg>
-              {phone}
-            </p>
-          ) : (
-            <p className="flex text-sm text-white font-normal"></p>
-          )}
-        </div>
-
-        <div className="flex justify-center px-14 py-2">
-          {location ? (
-            <p className="flex text-sm text-white font-normal">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-                className="mr-2 ml-2 h-5 w-5 text-white"
-              >
-                <path
-                  className="fill-white"
-                  d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"
-                ></path>
-              </svg>
-              {location}
-            </p>
-          ) : (
-            <p className="flex text-sm text-white font-normal"></p>
-          )}
-
-          {website ? (
-            <p className="flex text-sm text-white font-normal">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-                className="mr-2 ml-2 h-5 w-5 text-white"
-              >
-                <path
-                  className="fill-white"
-                  d="M256 64C256 46.33 270.3 32 288 32H415.1C415.1 32 415.1 32 415.1 32C420.3 32 424.5 32.86 428.2 34.43C431.1 35.98 435.5 38.27 438.6 41.3C438.6 41.35 438.6 41.4 438.7 41.44C444.9 47.66 447.1 55.78 448 63.9C448 63.94 448 63.97 448 64V192C448 209.7 433.7 224 416 224C398.3 224 384 209.7 384 192V141.3L214.6 310.6C202.1 323.1 181.9 323.1 169.4 310.6C156.9 298.1 156.9 277.9 169.4 265.4L338.7 96H288C270.3 96 256 81.67 256 64V64zM0 128C0 92.65 28.65 64 64 64H160C177.7 64 192 78.33 192 96C192 113.7 177.7 128 160 128H64V416H352V320C352 302.3 366.3 288 384 288C401.7 288 416 302.3 416 320V416C416 451.3 387.3 480 352 480H64C28.65 480 0 451.3 0 416V128z"
-                ></path>
-              </svg>
-              {website}
-            </p>
-          ) : (
-            <p className="flex text-sm text-white font-normal"></p>
-          )}
-        </div>
-
-        <div className="px-14 py-4">
-          <h3 className="w-1/4 text-xl text-white border-b-4 border-white">
-            Education
-          </h3>
-          {educations.map((education) => (
-            <ul key={education.id}>
-              <div className="mt-2 flex">
-                <h4 className="text-white font-medium">{education.school}</h4>
-                {education.schoolYears ? (
-                  <p className="ml-4 text-white">
-                    <b>Years:</b> {education.schoolYears}
-                  </p>
-                ) : (
-                  <p className="text-white"></p>
-                )}
-              </div>
-              <div className="mt-1 flex">
-                <p className="text-white italic">{education.degree}</p>
-                {education.gpa ? (
-                  <p className="ml-4 text-white">
-                    <b>GPA:</b> {education.gpa}
-                  </p>
-                ) : (
-                  <p className="text-white"></p>
-                )}
-              </div>
-              {education.educationInfo ? (
-                <p className="mt-1 text-white italic">
-                  <b>Additional Info:</b> {education.educationInfo}
-                </p>
-              ) : (
-                <p className="text-white"></p>
-              )}
-            </ul>
-          ))}
-        </div>
+        <InfoDisplay
+          name={name}
+          imageUrl={imageUrl}
+          objective={objective}
+          email={email}
+          phone={phone}
+          location={location}
+          website={website}
+        />
+        <EducationsDisplay educations={educations} />
 
         <SkillsDisplay
           technicalSkills={technicalSkills}
