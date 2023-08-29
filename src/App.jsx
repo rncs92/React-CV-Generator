@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import useLocalStorage from "./hooks/useLocalStorage";
+import SkillsDisplay from "./components/SkillsDisplay";
+import LanguagesDisplay from "./components/LanguagesDisplay";
+import ProfileDisplay from "./components/ProfileDisplay";
 
 function App() {
   const [name, setName] = useLocalStorage("name", "");
@@ -12,14 +15,18 @@ function App() {
 
   const [profile, setProfile] = useLocalStorage("profile", "");
 
-  const [school, setSchool] = useLocalStorage("school", "");
-  const [schoolYears, setSchoolYears] = useLocalStorage("schoolYears", "");
-  const [degree, setDegree] = useLocalStorage("degree", "");
-  const [gpa, setGpa] = useLocalStorage("gpa", "");
-  const [educationInfo, setEducationInfo] = useLocalStorage(
-    "educationInfo",
-    ""
-  );
+  const [educationId, setEducationId] = useState(2);
+
+  const [educations, setEducations] = useState([
+    {
+      id: 1,
+      school: "",
+      schoolYears: "",
+      degree: "",
+      gpa: "",
+      educationInfo: "",
+    },
+  ]);
 
   const [company, setCompany] = useLocalStorage("company", "");
   const [jobTitle, setJobTitle] = useLocalStorage("jobTitle", "");
@@ -38,6 +45,26 @@ function App() {
   const [languages, setLanguages] = useLocalStorage("languages", "");
 
   const [imageUrl, setImageUrl] = useLocalStorage("image", "");
+
+  function addEducation() {
+    setEducations([
+      ...educations,
+      {
+        id: educationId,
+        school: '',
+        schoolYears: '',
+        degree: '',
+        gpa: '',
+        educationInfo: '',
+      },
+    ]);
+
+    setEducationId((prevEducationId) => prevEducationId + 1);
+  }
+
+  function deleteEducation(id) {
+    setEducations([...educations.filter((education) => education.id !== id)]);
+  }
 
   function handleNameInput(event) {
     setName(event.target.value);
@@ -67,24 +94,54 @@ function App() {
     setProfile(event.target.value);
   }
 
-  function handleSchoolInput(event) {
-    setSchool(event.target.value);
+  function handleSchoolInput(event, educationId) {
+    const updatedEducations = educations.map((education) =>
+      education.id === educationId
+        ? { ...education, school: event.target.value }
+        : education
+    );
+
+    setEducations(updatedEducations);
   }
 
-  function handleSchoolYearsInput(event) {
-    setSchoolYears(event.target.value);
+  function handleSchoolYearsInput(event, educationId) {
+    const updatedEducations = educations.map((education) =>
+      education.id === educationId
+        ? { ...education, schoolYears: event.target.value }
+        : education
+    );
+
+    setEducations(updatedEducations);
   }
 
-  function handleDegreelInput(event) {
-    setDegree(event.target.value);
+  function handleDegreeInput(event, educationId) {
+    const updatedEducations = educations.map((education) =>
+      education.id === educationId
+        ? { ...education, degree: event.target.value }
+        : education
+    );
+
+    setEducations(updatedEducations);
   }
 
-  function handleGpaInput(event) {
-    setGpa(event.target.value);
+  function handleGpaInput(event, educationId) {
+    const updatedEducations = educations.map((education) =>
+      education.id === educationId
+        ? { ...education, gpa: event.target.value }
+        : education
+    );
+
+    setEducations(updatedEducations);
   }
 
-  function handleEducationInfoInput(event) {
-    setEducationInfo(event.target.value);
+  function handleEducationInfoInput(event, educationId) {
+    const updatedEducations = educations.map((education) =>
+      education.id === educationId
+        ? { ...education, educationInfo: event.target.value }
+        : education
+    );
+
+    setEducations(updatedEducations);
   }
 
   function handleCompanyInput(event) {
@@ -161,9 +218,9 @@ function App() {
                 stroke="currentColor"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                 />
               </svg>
@@ -282,13 +339,13 @@ function App() {
           <div className="flex space-x-4 mb-2">
             <div className="flex flex-col w-full">
               <label
-                htmlFor="school"
+                htmlFor="profile"
                 className="mb-2 text-lg font-sans font-medium"
               >
                 Introduce yourself
               </label>
               <textarea
-                id="message"
+                id="profile"
                 value={profile}
                 onChange={handleProfileInput}
                 rows="4"
@@ -305,107 +362,162 @@ function App() {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               stroke="currentColor"
               aria-hidden="true"
               className="mr-2 h-6 w-6 text-gray-600"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"
               ></path>
             </svg>
             Education
           </h2>
-          <div className="flex space-x-4 mb-2">
-            <div className="flex flex-col w-full">
-              <label
-                htmlFor="school"
-                className="mb-2 text-lg font-sans font-medium"
-              >
-                School
-              </label>
-              <input
-                name="school"
-                id="school"
-                value={school}
-                onChange={handleSchoolInput}
-                type="text"
-                placeholder="School"
-                className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
-              />
-            </div>
-            <div className="flex flex-col w-full">
-              <label
-                htmlFor="year"
-                className="mb-2 text-lg font-sans font-medium"
-              >
-                Years
-              </label>
-              <input
-                name="year"
-                id="year"
-                value={schoolYears}
-                onChange={handleSchoolYearsInput}
-                type="text"
-                placeholder="Years"
-                className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
-              />
-            </div>
-          </div>
-          <div className="flex space-x-4 mb-2">
-            <div className="flex flex-col w-full">
-              <label
-                htmlFor="degree"
-                className="mb-2 text-lg font-sans font-medium"
-              >
-                Degree
-              </label>
-              <input
-                name="degree"
-                id="degree"
-                value={degree}
-                onChange={handleDegreelInput}
-                type="text"
-                placeholder="Degree"
-                className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
-              />
-            </div>
-            <div className="flex flex-col w-ful">
-              <label
-                htmlFor="gpa"
-                className="mb-2 text-lg font-sans font-medium"
-              >
-                GPA
-              </label>
-              <input
-                name="gpa"
-                id="gpa"
-                value={gpa}
-                onChange={handleGpaInput}
-                type="text"
-                placeholder="GPA"
-                className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
-              />
-            </div>
-          </div>
-          <div className="flex flex-col w-full mb-2">
-            <label
-              htmlFor="info"
-              className="mb-2 text-lg font-sans font-medium"
+
+          {educations.map((education) => (
+            <ul
+              className="p-2 mb-2 bg-gray-100 border-gray-300 border-2 rounded-lg shadow-xl"
+              key={education.id}
             >
-              Additional Information
-            </label>
-            <input
-              name="info"
-              id="info"
-              value={educationInfo}
-              onChange={handleEducationInfoInput}
-              type="text"
-              placeholder="Info"
-              className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
-            />
+              <div className="flex justify-end">
+                <button onClick={() => deleteEducation(education.id)}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                    className="h-6 w-6 text-red-800"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+              <div className="flex space-x-4 mb-2">
+                <div className="flex flex-col w-full">
+                  <label
+                    htmlFor="school"
+                    className="mb-2 text-lg font-sans font-medium"
+                  >
+                    School
+                  </label>
+                  <input
+                    name="school"
+                    id="school"
+                    defaultValue={education.school}
+                    onChange={(event) => handleSchoolInput(event, education.id)}
+                    type="text"
+                    placeholder="School"
+                    className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                  />
+                </div>
+                <div className="flex flex-col w-full">
+                  <label
+                    htmlFor="schoolYears"
+                    className="mb-2 text-lg font-sans font-medium"
+                  >
+                    Years
+                  </label>
+                  <input
+                    name="schoolYears"
+                    id="schoolYears"
+                    defaultValue={education.schoolYears}
+                    onChange={(event) =>
+                      handleSchoolYearsInput(event, education.id)
+                    }
+                    type="text"
+                    placeholder="Years"
+                    className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                  />
+                </div>
+              </div>
+              <div className="flex space-x-4 mb-2">
+                <div className="flex flex-col w-full">
+                  <label
+                    htmlFor="degree"
+                    className="mb-2 text-lg font-sans font-medium"
+                  >
+                    Degree
+                  </label>
+                  <input
+                    name="degree"
+                    id="degree"
+                    defaultValue={education.degree}
+                    onChange={(event) => handleDegreeInput(event, education.id)}
+                    type="text"
+                    placeholder="Degree"
+                    className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                  />
+                </div>
+                <div className="flex flex-col w-ful">
+                  <label
+                    htmlFor="gpa"
+                    className="mb-2 text-lg font-sans font-medium"
+                  >
+                    GPA
+                  </label>
+                  <input
+                    name="gpa"
+                    id="gpa"
+                    defaultValue={education.gpa}
+                    onChange={(event) => handleGpaInput(event, education.id)}
+                    type="text"
+                    placeholder="GPA"
+                    className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col w-full mb-2">
+                <label
+                  htmlFor="info"
+                  className="mb-2 text-lg font-sans font-medium"
+                >
+                  Additional Information
+                </label>
+                <input
+                  name="info"
+                  id="info"
+                  defaultValue={education.educationInfo}
+                  onChange={(event) =>
+                    handleEducationInfoInput(event, education.id)
+                  }
+                  type="text"
+                  placeholder="Info"
+                  className="mt-1 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                />
+              </div>
+            </ul>
+          ))}
+          <div className="flex justify-end">
+            <button
+              type="button"
+              className="flex items-center rounded-md bg-white py-2 pl-3 pr-4 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              onClick={addEducation}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                aria-hidden="true"
+                className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 6v12m6-6H6"
+                ></path>
+              </svg>
+              Add School
+            </button>
           </div>
         </div>
 
@@ -415,14 +527,14 @@ function App() {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               stroke="currentColor"
               aria-hidden="true"
               className="mr-2 h-6 w-6 text-gray-600"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"
               ></path>
             </svg>
@@ -580,12 +692,7 @@ function App() {
 
       <div className="w-1/2 bg-white p-4">
         <div className="w-4/5 bg-white">
-          <div className="mt-6">
-            <h3 className="w-1/4 text-xl text-black border-b-4 border-black">
-              Profile
-            </h3>
-            <p className="mt-2 font-sm text-justify">{profile}</p>
-          </div>
+          <ProfileDisplay profile={profile} />
           <div className="mt-6">
             <h3 className="w-2/4 text-xl text-black border-b-4 border-black">
               Work Experience
@@ -698,67 +805,45 @@ function App() {
           <h3 className="w-1/4 text-xl text-white border-b-4 border-white">
             Education
           </h3>
-          <div className="mt-2 flex">
-            <h4 className="text-white font-medium">{school}</h4>
-            {schoolYears ? (
-              <p className="ml-4 text-white">
-                <b>Years:</b> {schoolYears}
-              </p>
-            ) : (
-              <p className="text-white"></p>
-            )}
-          </div>
-          <div className="mt-1 flex">
-            <p className="text-white italic">{degree}</p>
-            {gpa ? (
-              <p className="ml-4 text-white">
-                <b>GPA:</b> {gpa}
-              </p>
-            ) : (
-              <p className="text-white"></p>
-            )}
-          </div>
-          {educationInfo ? (
-            <p className="mt-1 text-white italic">
-              <b>Additional Info:</b> {educationInfo}
-            </p>
-          ) : (
-            <p className="text-white"></p>
-          )}
+          {educations.map((education) => (
+            <ul key={education.id}>
+              <div className="mt-2 flex">
+                <h4 className="text-white font-medium">{education.school}</h4>
+                {education.schoolYears ? (
+                  <p className="ml-4 text-white">
+                    <b>Years:</b> {education.schoolYears}
+                  </p>
+                ) : (
+                  <p className="text-white"></p>
+                )}
+              </div>
+              <div className="mt-1 flex">
+                <p className="text-white italic">{education.degree}</p>
+                {education.gpa ? (
+                  <p className="ml-4 text-white">
+                    <b>GPA:</b> {education.gpa}
+                  </p>
+                ) : (
+                  <p className="text-white"></p>
+                )}
+              </div>
+              {education.educationInfo ? (
+                <p className="mt-1 text-white italic">
+                  <b>Additional Info:</b> {education.educationInfo}
+                </p>
+              ) : (
+                <p className="text-white"></p>
+              )}
+            </ul>
+          ))}
         </div>
 
-        <div className="px-14 py-4">
-          <h3 className="w-1/4 text-xl text-white border-b-4 border-white">
-            Skills
-          </h3>
-          {technicalSkills ? (
-            <div>
-              <h4 className="mt-2 text-white text-lg font-medium">
-                Techincal Skills
-              </h4>
-              <p className="text-white ">{technicalSkills}</p>
-            </div>
-          ) : (
-            <p></p>
-          )}
-          {softSkills ? (
-            <div>
-              <h4 className="mt-2 text-white text-lg font-medium">
-                Soft Skills
-              </h4>
-              <p className="text-white">{softSkills}</p>
-            </div>
-          ) : (
-            <p></p>
-          )}
-        </div>
+        <SkillsDisplay
+          technicalSkills={technicalSkills}
+          softSkills={softSkills}
+        />
 
-        <div className="px-14 py-4">
-          <h3 className="w-1/4 text-xl text-white border-b-4 border-white">
-            Languages
-          </h3>
-          <p className="mt-2 text-white">{languages}</p>
-        </div>
+        <LanguagesDisplay languages={languages} />
       </div>
     </div>
   );
