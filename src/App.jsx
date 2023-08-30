@@ -7,7 +7,7 @@ import ProfileDisplay from "./components/ProfileDisplay";
 import EducationsDisplay from "./components/EducationsDisplay";
 import InfoDisplay from "./components/InfoDisplay";
 import WorkExperiencesDisplay from "./components/WorkExperiencesDisplay";
-import html2pdf  from "html2pdf.js";
+import html2pdf from "html2pdf.js";
 
 function App() {
   const [name, setName] = useLocalStorage("name", "");
@@ -236,7 +236,6 @@ function App() {
   function downloadCv() {
     const element = document.getElementById("cv-content");
     const opt = {
-      margin: 10,
       filename: "cv.pdf",
       image: { type: "jpeg", quality: 0.98 },
       html2canvas: { scale: 2 },
@@ -834,8 +833,8 @@ function App() {
         </div>
       </div>
 
-                  <div id="cv-content" className="w-full flex">
-        <div className="w-1/2 bg-white p-4">
+      <div id="cv-content" className="w-fit flex">
+        <div className="w-1/2 bg-white ml-4">
           <div className="w-4/5 bg-white">
             <ProfileDisplay profile={profile} />
             <WorkExperiencesDisplay workExperiences={workExperiences} />
@@ -861,7 +860,7 @@ function App() {
 
           <LanguagesDisplay languages={languages} />
         </div>
-        </div>
+      </div>
     </div>
   );
 }
