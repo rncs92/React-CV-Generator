@@ -9,7 +9,7 @@ export default function WorkExperiencesDisplay(props) {
       {props.workExperiences.map((workExperience) => (
         <ul key={workExperience.id}>
           <div className="flex mt-2">
-            <p className="font-xs">{workExperience.workYears}</p>
+            <p className="font-xs"><b>Years: </b>{workExperience.workYears}</p>
           </div>
           <div className="flex">
             {workExperience.jobTitle ? (

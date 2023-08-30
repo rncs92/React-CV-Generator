@@ -833,7 +833,7 @@ function App() {
         </div>
       </div>
 
-      <div id="cv-content" className="w-fit flex">
+      <div id="cv-content" className="w-full flex">
         <div className="w-1/2 bg-white ml-4">
           <div className="w-4/5 bg-white">
             <ProfileDisplay profile={profile} />
